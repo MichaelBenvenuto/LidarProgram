@@ -55,12 +55,12 @@ float* readPCAP(int* vsize) {
 	packets = 0;
 	//Secondary scan to find and store the parsed data
 	for (int i = 0; i < size; i++) {
-		
+
 		//Look for header 0xFFEE
 		if (pcap_buffer[i] == 0xff && pcap_buffer[i + 1] == 0xee) {
-			
+
 			packets++;
-			
+
 			run = 0;//Reset the run variable
 			i += 2; //Skip to the 0xEE
 			azimuth = (unsigned short int)(((unsigned short int)pcap_buffer[i + 1]) << 8 | pcap_buffer[i]); //Perform the calculation
