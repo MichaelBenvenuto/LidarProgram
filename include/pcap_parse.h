@@ -10,7 +10,7 @@ float* readPCAP(int* vsize) {
 	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-15-08-34_Velodyne-VLP-16-Data_Depot 10Hz Single Returns.pcap", "rb");
 
 	//Seek to the end of the file
-	fseek(f, 0, SEEK_END); 
+	fseek(f, 0, SEEK_END);
 	int size = ftell(f); //Retreive and store the size of the file
 	rewind(f); //Undo that seek
 
@@ -51,7 +51,7 @@ float* readPCAP(int* vsize) {
 
 	//Allocate 32 times the number of packets (2 sets of 16 channels of data)
 	vertices = (float*)calloc(packets * 96, sizeof(float));
-	packets = 0; //Reset the packet variable
+	int points = 0; //Reset the packet variable
 
 	//Secondary scan to find and store the parsed data
 	for (int i = 0; i < size; i++) {
@@ -69,11 +69,15 @@ float* readPCAP(int* vsize) {
 		if (run == 0) {
 			azimuth = (unsigned short int)(((unsigned short int)pcap_buffer[i + 1]) << 8 | pcap_buffer[i]); //Perform the calculation
 			angle = (azimuth / 100.0) * (2 * 3.14 / 180.0); //Convert it to radians for the vector position calculation
+			i += 2;
+			run += 2;
+			continue;
 		}
 		else if (run == 2) {
 			int channel = 0; //Each channel of data represents 2 degrees ( (+/- 8) degrees )
 			int j;
 			for (j = i; j < i + 96; j += 3) {
+
 				unsigned short int distance = (((unsigned short int)pcap_buffer[j + 1]) << 8 | pcap_buffer[j]) * 2; //Retreive the distance which is the first two bytes of every three bytes
 				unsigned char intensity = pcap_buffer[j + 2]; //The intensity is the third byte !!!(This data value hasnt been implemented yet because only the points are retrieved for a VBO store to improve rendering performance)!!!
 
@@ -81,15 +85,14 @@ float* readPCAP(int* vsize) {
 				if (distance > 200 && distance < 100000) {
 
 					//Find out how many useful data points there are
-					packets++;
-
+					points++;
 					//Find out the second angle
-					double angle2 = ((channel - 8.0) * 4.0 * 3.14) / 180.0;
+					double angle2 = ((((channel % 16) - 8.0) * 4.0 * 3.14)) / 180.0;
 
 					//Perform vertex calculations for each element
-					vertices[((packets - 1) * 3)] = distance * (cos(angle2) * sin(angle));		//x
-					vertices[((packets - 1) * 3) + 1] = distance * (cos(angle2) * cos(angle));	//y
-					vertices[((packets - 1) * 3) + 2] = distance * (sin(angle2));				//z
+					vertices[((points - 1) * 3)] = distance * (cos(angle2) * sin(angle));		//x
+					vertices[((points - 1) * 3) + 1] = distance * (cos(angle2) * cos(angle));	//y
+					vertices[((points - 1) * 3) + 2] = distance * (sin(angle2));				//z
 
 				}
 				channel++;
@@ -102,13 +105,14 @@ float* readPCAP(int* vsize) {
 
 
 	}
+
 	//Reallocate to the smaller array size (Shrinking an array with realloc is super fast compared to a lossless malloc)
-	vertices = (float*)realloc(vertices, packets * 96 * sizeof(float));
+	vertices = (float*)realloc(vertices, points * 3 * sizeof(float));
 
 	//Free the string because its huge and takes up about 1000MB of memory
 	free(pcap_buffer);
 
 	//Set our out parameter for the size and return the vertices we found
-	*vsize = packets;
+	*vsize = points * 3;
 	return vertices;
 }
