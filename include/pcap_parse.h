@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-float** readPCAP(int* vsize) {
+float* readPCAP(int* vsize) {
 
 	//Open the file as a binary file, read-only.
 	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-15-08-34_Velodyne-VLP-16-Data_Depot 10Hz Single Returns.pcap", "rb");
@@ -34,10 +34,10 @@ float** readPCAP(int* vsize) {
 	//The current angle of the packet (In the form of an unsigned short int (uint_16t))
 	unsigned short int azimuth = 0;
 	//The angle in a real value decimal number
-	float angle = 0;
+	double angle = 0;
 
 	//The vertex array data
-	float** vertices = 0;
+	float* vertices = 0;
 
 	//Initial scan to find out how many actual packets there are in the file.
 	for (int i = 0; i < size; i++) {
@@ -50,7 +50,7 @@ float** readPCAP(int* vsize) {
 	}
 
 	//Allocate 32 times the number of packets (2 sets of 16 channels of data)
-	vertices = (float**)calloc(packets * 32, sizeof(float*));
+	vertices = (float*)calloc(packets * 96, sizeof(float));
 	packets = 0; //Reset the packet variable
 
 	//Secondary scan to find and store the parsed data
@@ -68,7 +68,7 @@ float** readPCAP(int* vsize) {
 		//The angle is represented as two bytes and the value given is 100x larger than the actual angle (Values between 0 and 35999)
 		if (run == 0) {
 			azimuth = (unsigned short int)(((unsigned short int)pcap_buffer[i + 1]) << 8 | pcap_buffer[i]); //Perform the calculation
-			angle = (azimuth / 100.0f) * (2 * 3.14 / 180.0); //Convert it to radians for the vector position calculation
+			angle = (azimuth / 100.0) * (2 * 3.14 / 180.0); //Convert it to radians for the vector position calculation
 		}
 		else if (run == 2) {
 			int channel = 0; //Each channel of data represents 2 degrees ( (+/- 8) degrees )
@@ -84,15 +84,12 @@ float** readPCAP(int* vsize) {
 					packets++;
 
 					//Find out the second angle
-					float angle2 = ((channel - 8.0f) * 4.0f * 3.14f) / 180.0f;
+					double angle2 = ((channel - 8.0) * 4.0 * 3.14) / 180.0;
 
 					//Perform vertex calculations for each element
-					float* vertex = (float*)calloc(3, sizeof(float));
-					vertex[0] = distance * (cos(angle2) * sin(angle)); //x
-					vertex[1] = distance * (cos(angle2) * cos(angle)); //y
-					vertex[2] = distance * (sin(angle2));			   //z
-
-					vertices[packets - 1] = vertex;
+					vertices[((packets - 1) * 3)] = distance * (cos(angle2) * sin(angle));		//x
+					vertices[((packets - 1) * 3) + 1] = distance * (cos(angle2) * cos(angle));	//y
+					vertices[((packets - 1) * 3) + 2] = distance * (sin(angle2));				//z
 
 				}
 				channel++;
@@ -106,7 +103,7 @@ float** readPCAP(int* vsize) {
 
 	}
 	//Reallocate to the smaller array size (Shrinking an array with realloc is super fast compared to a lossless malloc)
-	vertices = (float**)realloc(vertices, packets * sizeof(float*));
+	vertices = (float*)realloc(vertices, packets * 96 * sizeof(float));
 
 	//Free the string because its huge and takes up about 1000MB of memory
 	free(pcap_buffer);
