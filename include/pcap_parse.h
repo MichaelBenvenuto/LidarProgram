@@ -29,7 +29,7 @@ float* readPCAP(int* vsize) {
 
 	//Packet counter and current run data
 	int packets = 0;
-	int run = 1;
+	int run = 0;
 
 	//The current angle of the packet (In the form of an unsigned short int (uint_16t))
 	unsigned short int azimuth = 0;
@@ -52,28 +52,24 @@ float* readPCAP(int* vsize) {
 	//Allocate 32 times the number of packets (2 sets of 16 channels of data)
 	vertices = (float*)calloc(packets * 96, sizeof(float));
 	int points = 0; //Reset the packet variable
-
+	packets = 0;
 	//Secondary scan to find and store the parsed data
 	for (int i = 0; i < size; i++) {
+		
 		//Look for header 0xFFEE
-		if (pcap_buffer[i] == 0xff) {
-			if (pcap_buffer[i + 1] == 0xee) {
-				run = 0;//Reset the run variable
-				i++;//Skip to the 0xEE
-				continue; //Finally, skip the 0xEE and perform no further processing
-			}
+		if (pcap_buffer[i] == 0xff && pcap_buffer[i + 1] == 0xee) {
+			
+			packets++;
+			
+			run = 0;//Reset the run variable
+			i += 2; //Skip to the 0xEE
+			azimuth = (unsigned short int)(((unsigned short int)pcap_buffer[i + 1]) << 8 | pcap_buffer[i]); //Perform the calculation
+			angle = (azimuth / 100.0) * (2 * 3.14 / 180.0); //Convert it to radians for the vector position calculation
 		}
 
 		//When the run is started, obtain the angular value of the packet
 		//The angle is represented as two bytes and the value given is 100x larger than the actual angle (Values between 0 and 35999)
-		if (run == 0) {
-			azimuth = (unsigned short int)(((unsigned short int)pcap_buffer[i + 1]) << 8 | pcap_buffer[i]); //Perform the calculation
-			angle = (azimuth / 100.0) * (2 * 3.14 / 180.0); //Convert it to radians for the vector position calculation
-			i += 2;
-			run += 2;
-			continue;
-		}
-		else if (run == 2) {
+		else if (run == 2 && packets) {
 			int channel = 0; //Each channel of data represents 2 degrees ( (+/- 8) degrees )
 			int j;
 			for (j = i; j < i + 96; j += 3) {
@@ -99,10 +95,9 @@ float* readPCAP(int* vsize) {
 			}
 			//Continue our main loop from where we left off
 			i = j;
-			//printf("%i/%i\n", i, size);
+			run += j - 1;
 		}
 		run++;
-
 
 	}
 
