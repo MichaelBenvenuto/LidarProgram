@@ -10,6 +10,7 @@
 
 #include "pcap_read.h"
 #include "shader.h"
+#include "nmea_converter.h"
 
 int main(void) {
 

@@ -2,18 +2,23 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <string.h>
+
 #include <math.h>
+
+static const double lookup_table[16] = { -15,1,-13,-3,-11,5,-9,7,-7,9,-5,11,-3,13,-1,15 };
 
 float* readPCAP(int* vsize) {
 
 	//Open the file as a binary file, read-only.
-	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-15-08-34_Velodyne-VLP-16-Data_Depot 10Hz Single Returns.pcap", "rb");
+	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-14-37-22_Velodyne-VLP-16-Data_Downtown 10Hz Single.pcap", "rb");
 
 	//Seek to the end of the file
 	fseek(f, 0, SEEK_END);
 	int size = ftell(f); //Retreive and store the size of the file
 	rewind(f); //Undo that seek
-
+		
 	//Prepare the array for storing the file data
 	unsigned char* pcap_buffer = (unsigned char*)calloc(size + 1, sizeof(unsigned char));
 	int size2 = fread_s(pcap_buffer, size + 1, sizeof(unsigned char), size, f); //Read the file data into the pcap file buffer
@@ -28,7 +33,7 @@ float* readPCAP(int* vsize) {
 
 
 	//Packet counter and current run data
-	int packets = 0;
+	size_t packets = 0;
 	int run = 0;
 
 	//The current angle of the packet (In the form of an unsigned short int (uint_16t))
@@ -49,8 +54,13 @@ float* readPCAP(int* vsize) {
 		}
 	}
 
+	if (packets * 96 > SIZE_MAX / sizeof(float)) {
+		printf("TOO BIG!\n");
+	}
+
 	//Allocate 32 times the number of packets (2 sets of 16 channels of data)
-	vertices = (float*)calloc(packets * 96, sizeof(float));
+	vertices = (float*)calloc(packets * 96u, sizeof(float));
+
 	int points = 0; //Reset the packet variable
 	packets = 0;
 	//Secondary scan to find and store the parsed data
@@ -83,7 +93,7 @@ float* readPCAP(int* vsize) {
 					//Find out how many useful data points there are
 					points++;
 					//Find out the second angle
-					double angle2 = ((((channel % 16) - 8.0) * 4.0 * 3.14)) / 180.0;
+					double angle2 = ((double)lookup_table[channel % 16]) * (3.14 / 180.0);
 
 					//Perform vertex calculations for each element
 					vertices[((points - 1) * 3)] = distance * (cos(angle2) * sin(angle));		//x
