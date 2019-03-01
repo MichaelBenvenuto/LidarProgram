@@ -8,11 +8,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "pcap_read.h"
+#include "packet_data.h"
+#include "lidar_converter.h"
 #include "shader.h"
-#include "nmea_converter.h"
 
 int main(void) {
+	
+	
+	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-14-37-22_Velodyne-VLP-16-Data_Downtown 10Hz Single.pcap", "rb");
+
+	//Seek to the end of the file
+	fseek(f, 0, SEEK_END);
+	int sizes = ftell(f); //Retreive and store the size of the file
+	rewind(f); //Undo that seek
+
+			   //Prepare the array for storing the file data
+	unsigned char* pcap_buffer = (unsigned char*)calloc(sizes + 1, sizeof(unsigned char));
+	int size2 = fread_s(pcap_buffer, sizes + 1, sizeof(unsigned char), sizes, f);
+
+	int size = 0;
+
+	point_t* data = file(pcap_buffer, sizes, &size);
 
 	if (!glfwInit()) {
 		glfwTerminate();
@@ -51,9 +67,6 @@ int main(void) {
 
 	//system("pause");
 
-	int size = 0;
-	float* data = readPCAP(&size);
-
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(2, VBO);
 
@@ -70,6 +83,8 @@ int main(void) {
 	glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), data, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
+
+	printf("%i\n", size);
 
 	free(data);
 
@@ -92,15 +107,37 @@ int main(void) {
 		glBindVertexArray(VAO);
 
 		glPushMatrix();
+		glColor3f(1, 1, 1);
 		glRotatef(30.0f, 1.0f, 0.0f, 0.0f);
 		glRotatef(angle, 0.0f, 1.0f, 0.0f);
 		glScalef(0.00001, 0.00001, 0.00001);
-		glDrawArrays(GL_POINTS, 0, size / 1000);
+
+		glDrawArrays(GL_POINTS, 0, size);
+
+		glScalef(100000, 100000,100000);
+
+		glBegin(GL_LINES);
+
+		glColor3f(1, 0, 0);
+		glVertex3f(0, 0, 0);
+		glVertex3f(1, 0, 0);
+
+		glColor3f(0, 1, 0);
+		glVertex3f(0, 0, 0);
+		glVertex3f(0, 1, 0);
+
+		glColor3f(0, 0, 1);
+		glVertex3f(0, 0, 0);
+		glVertex3f(0, 0, 1);
+
+		glEnd();
+
 		glPopMatrix();
+
 		if (angle >= 360) {
 			angle = 0;
 		}
-		angle += 0.002f;
+		angle += 0.2f;
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
