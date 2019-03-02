@@ -10,10 +10,14 @@
 
 #include "packet_data.h"
 #include "lidar_converter.h"
+#include "nmea_converter.h"
 #include "shader.h"
 
 int main(void) {
 	
+	printf("%i\n", sizeof(GPSpacket_t));
+
+	system("pause");
 	
 	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-14-37-22_Velodyne-VLP-16-Data_Downtown 10Hz Single.pcap", "rb");
 

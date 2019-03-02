@@ -5,6 +5,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+
+
 int conv_NMEA(const char* message, float* latitude, float* longitude) {
 	if (strncmp(message, "$GPRMC", 6) != 0) {
 		return -1;
@@ -42,8 +44,8 @@ int conv_NMEA(const char* message, float* latitude, float* longitude) {
 
 				size = comma_f - comma_l;
 				float_conv = (char*)calloc(size, sizeof(char));
-				strncpy(float_conv, &message[comma_l + 1], size - 1);
-
+				//strncpy(float_conv, &message[comma_l + 1], size - 1);
+				strncpy_s(float_conv, size, &message[comma_l + 1], size - 1);
 				*latitude = atof(float_conv);
 
 				degrees = floor(*latitude / 100);
@@ -65,7 +67,8 @@ int conv_NMEA(const char* message, float* latitude, float* longitude) {
 
 				size = comma_f - comma_l;
 				float_conv = (char*)calloc(size, sizeof(char));
-				strncpy(float_conv, &message[comma_l + 1], size - 1);
+				//strncpy(float_conv, &message[comma_l + 1], size - 1);
+				strncpy_s(float_conv, size, &message[comma_l + 1], size - 1);
 
 				*longitude = atof(float_conv);
 
@@ -102,3 +105,4 @@ int conv_NMEA(const char* message, float* latitude, float* longitude) {
 	}
 
 }
+
