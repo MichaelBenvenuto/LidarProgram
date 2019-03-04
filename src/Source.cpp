@@ -114,7 +114,7 @@ int main(void) {
 		glColor3f(1, 1, 1);
 		glRotatef(30.0f, 1.0f, 0.0f, 0.0f);
 		glRotatef(angle, 0.0f, 1.0f, 0.0f);
-		glScalef(0.00001, 0.00001, 0.00001);
+		glScalef(0.001, 0.001, 0.001);
 
 		glDrawArrays(GL_POINTS, 0, size);
 
@@ -141,7 +141,7 @@ int main(void) {
 		if (angle >= 360) {
 			angle = 0;
 		}
-		angle += 0.2f;
+		angle += 0.002f;
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

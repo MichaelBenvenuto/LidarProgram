@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+#pragma pack(push, 1)
 typedef struct cdata_t {
 	uint8_t distance[2];
 	uint8_t reflectivity;
@@ -24,6 +25,8 @@ typedef struct packet_t {
 	uint8_t timestamp[4];
 	uint8_t factory[2];
 };
+
+#pragma pack(pop)
 
 dblock_t block_read(const unsigned char* block);
 

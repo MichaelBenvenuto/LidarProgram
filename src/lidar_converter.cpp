@@ -9,9 +9,9 @@
 #include "math_l.h"
 
 #define QUICKCAST_16T(a) (*((uint16_t*)&a))
-#define ROTATE_16T(a) ((a << 8) | (a >> 8))
+#define ROTATE_16T(a) (((a << 8) | (a >> 8)) & 0xffffu)
 
-const double lookup_table[16] = { -15,1,-13,-3,-11,5,-9,7,-7,9,-5,11,-3,13,-1,15 };
+const double lookup_table[16] = { -15.0,1.0,-13.0,-3.0,-11.0,5.0,-9.0,7.0,-7.0,9.0,-5.0,11.0,-3.0,13.0,-1.0,15.0 };
 
 point_t *dblock(dblock_t data, uint16_t nextazimuth) {
 	float a1, a2, a3;
@@ -56,21 +56,22 @@ void packet_process(point_t* points, fdblock_t dblock, float next_angle, int i) 
 
 		float a1, a2, a3;
 
-		a1 = ROTATE_16T(QUICKCAST_16T(dblock.data.azimuth));
+		a1 = QUICKCAST_16T(dblock.data.azimuth) / 100.0f;
 		a3 = next_angle;
 
 		if (a3 < a1) {
 			a3 = a3 + 360.0f;
 		}
 
-		a2 = (a1 + ((a3 - a1) / 2)) / 100.0f;
+		a2 = (a1 + ((a3 - a1) / 2));
 
-		a1 *= (3.14) / 180.0f;
-		a2 *= (3.14) / 180.0f;
-		a3 *= (3.14) / 180.0f;
+		a1 *= (3.14f) / 180.0f;
+		a2 *= (3.14f) / 180.0f;
+		a3 *= (3.14f) / 180.0f;
 
 		for (int j = 0; j < 32; j++) {
-			float distance = (ROTATE_16T(QUICKCAST_16T(dblock.data.channel_data[j].distance))) / 100.0f;
+			float distance = QUICKCAST_16T(dblock.data.channel_data[j].distance) / 100.0f;
+			//printf("%f\n", distance);
 
 			double channel = lookup_table[j % 16] * 3.14 / 180.0f;
 
@@ -87,10 +88,10 @@ void process_translation(double lat, double lon, point_t* points, point_t home, 
 
 	//printf("%i %i\n", start, size);
 	//system("pause");
-	point_t p = atoxyz(lat, lon, 63710000000.0);
+	point_t p = atoxyz(lat, lon, 63710000.0);
 	
 	int end = min(start + size, total_size);
-	printf("%f %f %f\n", home.x - p.x, home.y - p.y, home.z - p.z);
+	//printf("%f %f %f\n", home.x - p.x, home.y - p.y, home.z - p.z);
 	
 	for (int i = start; i < end; i++) {
 
@@ -110,10 +111,11 @@ point_t *packet(packet_t data, int *out_size) {
 
 	float angle;
 	for (int i = 0; i < 11; i++) {
-		angle = ROTATE_16T(QUICKCAST_16T(data.data_blocks[i + 1].data.azimuth));
+		angle = QUICKCAST_16T(data.data_blocks[i + 1].data.azimuth) / 100.0f;
 		packet_process(points, data.data_blocks[i], angle, i);
+		//printf("%f\n", angle);
 	}
-	angle = ROTATE_16T(QUICKCAST_16T(data.data_blocks[11].data.azimuth));
+	angle = QUICKCAST_16T(data.data_blocks[11].data.azimuth) / 100.0f;
 	packet_process(points, data.data_blocks[11], angle, 11);
 
 	return points;
@@ -134,15 +136,16 @@ point_t *file(const unsigned char* data, int count, int* out_size) {
 			ispacket = ispacket & ((data[i + 42] == 0xff && data[i + 43] == 0xee) | (data[i + offsetof(GPSpacket_t, GPRMC_Sentence)] == 0x24) << 1);
 
 			//printf("%X ", ispacket);
-			
 
 			if (ispacket & 0b01) {
 				packets++;
+				//if(packets >= 1000) break;
 			}
 			if (ispacket & 0b10) {
 				
 			}
 		}
+
 	}
 
 	*out_size = packets * 384;
@@ -193,6 +196,7 @@ point_t *file(const unsigned char* data, int count, int* out_size) {
 
 
 				i += sizeof(packet_t) - 1;
+				//if(packets >= 1000) break;
 			}
 			else if (ispacket & 0b10) {
 				GPSpacket_t pos_sto;
@@ -205,7 +209,7 @@ point_t *file(const unsigned char* data, int count, int* out_size) {
 				lat *= (3.14 / 180.0);
 				lon *= (3.14 / 180.0);
 
-				point_t xyz = atoxyz(lat, lon, 63710000000.0);
+				point_t xyz = atoxyz(lat, lon, 6371000.0);
 
 				if (!home) {
 					home = (point_t*)malloc(sizeof(point_t));
