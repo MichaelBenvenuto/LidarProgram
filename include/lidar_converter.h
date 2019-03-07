@@ -3,9 +3,9 @@
 
 #include "packet_data.h"
 
-typedef struct point_t {
+typedef struct {
 	float x, y, z;
-};
+} point_t;
 
 point_t *dblock(dblock_t data, uint16_t nextazimuth);
 point_t *packet(packet_t data, int* out_size);

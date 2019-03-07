@@ -4,14 +4,14 @@
 #include <stdint.h>
 
 #pragma pack(push, 1)
-typedef struct GPSpacket_t {
+typedef struct {
 	uint8_t header[42];
 	uint8_t _PAD1_[198];
 	uint32_t timestamp;
 	uint32_t _PAD2_;
 	int8_t GPRMC_Sentence[72];
 	uint8_t _PAD3_[234];
-};
+} GPSpacket_t;
 #pragma pack(pop)
 
 //Converts GPRMC NMEA lat/lon data to a usable float

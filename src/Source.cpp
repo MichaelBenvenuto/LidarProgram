@@ -8,16 +8,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "packet_data.h"
-#include "lidar_converter.h"
-#include "nmea_converter.h"
-#include "shader.h"
+#include "../include/packet_data.h"
+#include "../include/lidar_converter.h"
+#include "../include/nmea_converter.h"
+#include "../include/shader.h"
 
 int main(void) {
-	
-	printf("%i\n", sizeof(GPSpacket_t));
-
-	system("pause");
 	
 	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-14-37-22_Velodyne-VLP-16-Data_Downtown 10Hz Single.pcap", "rb");
 
@@ -28,7 +24,7 @@ int main(void) {
 
 			   //Prepare the array for storing the file data
 	unsigned char* pcap_buffer = (unsigned char*)calloc(sizes + 1, sizeof(unsigned char));
-	int size2 = fread_s(pcap_buffer, sizes + 1, sizeof(unsigned char), sizes, f);
+	size_t size2 = fread_s(pcap_buffer, sizes + 1, sizeof(unsigned char), sizes, f);
 
 	int size = 0;
 
@@ -38,6 +34,8 @@ int main(void) {
 		glfwTerminate();
 		return 1;
 	}
+
+	free(pcap_buffer);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -114,7 +112,7 @@ int main(void) {
 		glColor3f(1, 1, 1);
 		glRotatef(30.0f, 1.0f, 0.0f, 0.0f);
 		glRotatef(angle, 0.0f, 1.0f, 0.0f);
-		glScalef(0.001, 0.001, 0.001);
+		glScalef(0.001f, 0.001f, 0.001f);
 
 		glDrawArrays(GL_POINTS, 0, size);
 
