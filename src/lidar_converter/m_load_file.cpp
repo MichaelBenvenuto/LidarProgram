@@ -2,7 +2,7 @@
 
 #include "h_lidar_converter_common.h"
 
-point_t *file(const unsigned char* data, int count, int* out_size) {
+point_t *load_file(const unsigned char* data, int count, int* out_size) {
 	int packets = 0;
 	int pos_packets = 0;
 	int packet_i = 0;

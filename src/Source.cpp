@@ -14,7 +14,7 @@
 #include "../include/shader.h"
 
 int main(void) {
-	
+
 	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-14-37-22_Velodyne-VLP-16-Data_Downtown 10Hz Single.pcap", "rb");
 
 	//Seek to the end of the file
@@ -28,7 +28,11 @@ int main(void) {
 
 	int size = 0;
 
-	point_t* data = file(pcap_buffer, sizes, &size);
+	point_t* data = load_file(pcap_buffer, sizes, &size);
+
+	FILE* file = fopen("C:\\Users\\Michael\\Desktop\\data.pbf", "wb");
+
+	conv_file(file, data, size);
 
 	if (!glfwInit()) {
 		glfwTerminate();
