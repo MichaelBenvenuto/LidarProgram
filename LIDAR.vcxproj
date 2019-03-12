@@ -134,6 +134,7 @@
     <ClCompile Include="src\lidar_converter\m_conv_file.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_data.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_color.cpp" />
+    <ClCompile Include="src\lidar_converter\m_load_file_data_range.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_packets_data.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_packets_pos.cpp" />
     <ClCompile Include="src\lidar_converter\m_process_translation.cpp" />

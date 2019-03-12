@@ -54,6 +54,9 @@
     <ClCompile Include="src\lidar_converter\m_load_packets_pos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\lidar_converter\m_load_file_data_range.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\lidar_converter.h">

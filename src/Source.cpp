@@ -25,7 +25,7 @@ int main(void) {
 
 	int size = 0;
 
-	point_t* data = load_file_data(pcap_buffer, sizes, &size);
+	point_t* data = load_file_data(pcap_buffer, sizes, &size, 20, 10000);
 
 	printf("%i\n", size);
 

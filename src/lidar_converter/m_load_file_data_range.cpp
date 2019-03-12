@@ -1,0 +1,64 @@
+#include "h_lidar_converter_common.h"
+
+#include <memory.h>
+
+point_t *load_file_data(const unsigned char* data, int count, int *out_size, int min, int max) {
+	int packets_size;
+	int point_size;
+
+	packet_t* packets = load_packets_data(data, count, &packets_size);
+	point_size = packets_size * 384;
+
+	point_t* points = (point_t*)calloc(point_size, sizeof(point_t));
+
+	int point_valid = 0;
+
+	for (int i = 0; i < packets_size; i++) {
+		packet_t packet = packets[i];
+		for (int j = 0; j < 12; j++) {
+			dblock_t data_block = packet.data_blocks[j].data;
+
+			double a1, a2, a3;
+
+			a1 = (data_block.azimuth / 100.0);
+			a3 = (j == 11) ? 0 : (packet.data_blocks[j + 1].data.azimuth / 100.0);
+
+			if (a1 < a3) {
+				a3 += 360.0;
+			}
+
+			a2 = fmod((a1 + ((a3 - a1) / 2)), 360.0);
+
+			a1 *= (3.14) / 180.0;
+			a2 *= (3.14) / 180.0;
+			a3 *= (3.14) / 180.0;
+
+
+			for (int k = 0; k < 32; k++) {
+
+				double channel = lookup_table[k % 16] * (3.14 / 180.0);
+				double distance = data_block.channel_data[k].distance / 100.0;
+
+				//printf("%i\n", point_valid);
+
+				if (distance > min && distance < max) {
+					if (i < 16) {
+						points[point_valid] = atoxyz(channel, a1, distance);
+					}
+					else {
+						points[point_valid] = atoxyz(channel, a2, distance);
+					}
+					point_valid++;
+				}
+			}
+		}
+	}
+
+	*out_size = point_valid;
+
+	points = (point_t*)realloc(points, point_valid * sizeof(point_t));
+
+	free(packets);
+
+	return points;
+}
