@@ -12,27 +12,22 @@
 #include "../include/lidar_converter.h"
 #include "../include/nmea_converter.h"
 #include "../include/shader.h"
-
 int main(void) {
 
 	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-14-37-22_Velodyne-VLP-16-Data_Downtown 10Hz Single.pcap", "rb");
 
-	//Seek to the end of the file
 	fseek(f, 0, SEEK_END);
-	int sizes = ftell(f); //Retreive and store the size of the file
-	rewind(f); //Undo that seek
+	int sizes = ftell(f);
+	rewind(f);
 
-			   //Prepare the array for storing the file data
 	unsigned char* pcap_buffer = (unsigned char*)calloc(sizes + 1, sizeof(unsigned char));
 	size_t size2 = fread_s(pcap_buffer, sizes + 1, sizeof(unsigned char), sizes, f);
 
 	int size = 0;
 
-	point_t* data = load_file(pcap_buffer, sizes, &size);
+	point_t* data = load_file_data(pcap_buffer, sizes, &size);
 
-	FILE* file = fopen("C:\\Users\\Michael\\Desktop\\data.pbf", "wb");
-
-	conv_file(file, data, size);
+	printf("%i\n", size);
 
 	if (!glfwInit()) {
 		glfwTerminate();
@@ -69,10 +64,6 @@ int main(void) {
 	vert = loadShader("lidarshader.vert", GL_VERTEX_SHADER);
 	frag = loadShader("lidarshader.frag", GL_FRAGMENT_SHADER);
 
-	//printf("%i %i\n", vert, frag);
-
-	//system("pause");
-
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(2, VBO);
 
@@ -87,10 +78,9 @@ int main(void) {
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 	glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), data, GL_STATIC_DRAW);
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
-
-	printf("%i\n", size);
 
 	free(data);
 
@@ -100,8 +90,6 @@ int main(void) {
 
 		glMatrixMode(GL_PROJECTION);
 		glViewport(0, 0, 800, 800);
-		//glFrustum(0, 800, 480, 0, 0, 2);
-		//glOrtho(0, 800, 0, 480, 0, 2);
 		glDepthRange(0, 10);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -120,7 +108,7 @@ int main(void) {
 
 		glDrawArrays(GL_POINTS, 0, size);
 
-		glScalef(100000, 100000,100000);
+		glScalef(100000.0f, 100000.0f,100000.0f);
 
 		glBegin(GL_LINES);
 
@@ -143,7 +131,7 @@ int main(void) {
 		if (angle >= 360) {
 			angle = 0;
 		}
-		angle += 0.002f;
+		angle += 0.2f;
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

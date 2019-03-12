@@ -18,16 +18,7 @@
     <ClCompile Include="src\Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\lidar_converter\m_dblock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lidar_converter\m_packet_process.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\lidar_converter\m_process_translation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lidar_converter\m_packet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\nmea_converter\m_conv_nmea_char.cpp">
@@ -48,10 +39,19 @@
     <ClCompile Include="src\shader\m_load_shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\lidar_converter\m_load_file.cpp">
+    <ClCompile Include="src\lidar_converter\m_conv_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\lidar_converter\m_conv_file.cpp">
+    <ClCompile Include="src\lidar_converter\m_load_file_color.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lidar_converter\m_load_file_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lidar_converter\m_load_packets_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lidar_converter\m_load_packets_pos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -87,6 +87,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\point.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pcap_headers\packet_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pcap_headers\pcap_global_header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pcap_headers\pcap_packet_header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,6 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{2F2F023F-3011-4B0B-801B-82454CE171CE}</ProjectGuid>
     <RootNamespace>LIDAR</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -131,10 +132,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\lidar_converter\m_conv_file.cpp" />
-    <ClCompile Include="src\lidar_converter\m_dblock.cpp" />
-    <ClCompile Include="src\lidar_converter\m_load_file.cpp" />
-    <ClCompile Include="src\lidar_converter\m_packet.cpp" />
-    <ClCompile Include="src\lidar_converter\m_packet_process.cpp" />
+    <ClCompile Include="src\lidar_converter\m_load_file_data.cpp" />
+    <ClCompile Include="src\lidar_converter\m_load_file_color.cpp" />
+    <ClCompile Include="src\lidar_converter\m_load_packets_data.cpp" />
+    <ClCompile Include="src\lidar_converter\m_load_packets_pos.cpp" />
     <ClCompile Include="src\lidar_converter\m_process_translation.cpp" />
     <ClCompile Include="src\lidar_math\m_atoxyz.cpp" />
     <ClCompile Include="src\lidar_math\m_interpolate.cpp" />
@@ -145,10 +146,14 @@
     <ClCompile Include="src\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\color.h" />
+    <ClInclude Include="include\pcap_headers\packet_types.h" />
+    <ClInclude Include="include\pcap_headers\pcap_packet_header.h" />
     <ClInclude Include="include\lidar_converter.h" />
     <ClInclude Include="include\math_l.h" />
     <ClInclude Include="include\nmea_converter.h" />
     <ClInclude Include="include\packet_data.h" />
+    <ClInclude Include="include\pcap_headers\pcap_global_header.h" />
     <ClInclude Include="include\point.h" />
     <ClInclude Include="include\shader.h" />
     <ClInclude Include="src\lidar_converter\h_lidar_converter_common.h" />
