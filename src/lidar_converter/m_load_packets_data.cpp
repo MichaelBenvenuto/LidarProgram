@@ -2,7 +2,7 @@
 
 #include <memory.h>
 
-packet_t* load_packets_data(const unsigned char* data, int count, int* out_size) {
+packet_t* load_packets_data(const uint8_t* data, int count, int* out_size) {
 	
 	Gheader_t header;
 

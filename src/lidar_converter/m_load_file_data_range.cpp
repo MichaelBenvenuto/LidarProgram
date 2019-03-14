@@ -2,7 +2,7 @@
 
 #include <memory.h>
 
-point_t *load_file_data(const unsigned char* data, int count, int *out_size, int min, int max) {
+point_t *load_file_data(const uint8_t* data, int count, int *out_size, int min, int max) {
 	int packets_size;
 	int point_size;
 
@@ -56,7 +56,14 @@ point_t *load_file_data(const unsigned char* data, int count, int *out_size, int
 
 	*out_size = point_valid;
 
+	point_t* p = points;
+
 	points = (point_t*)realloc(points, point_valid * sizeof(point_t));
+
+	if (p != points) {
+		printf("MEMORY LEAK HERE!\n");
+		free(p);
+	}
 
 	free(packets);
 

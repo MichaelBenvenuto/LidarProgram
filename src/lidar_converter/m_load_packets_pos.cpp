@@ -2,7 +2,7 @@
 
 #include <memory.h>
 
-GPSpacket_t* load_packets_pos(const unsigned char* data, int count, int* out_size) {
+GPSpacket_t* load_packets_pos(const uint8_t* data, int count, int* out_size) {
 
 	Gheader_t header;
 

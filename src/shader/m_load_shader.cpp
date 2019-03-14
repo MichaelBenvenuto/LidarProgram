@@ -38,6 +38,8 @@ unsigned int loadShader(const char* file, unsigned int shader_type) {
 
 		printf("%s\n", log_c);
 
+		free(log_c);
+
 		return 0;
 	}
 
