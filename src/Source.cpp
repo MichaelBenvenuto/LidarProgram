@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <gl/GL.h>
+#include <GL/GLU.h>
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
@@ -24,10 +25,10 @@ int main(void) {
 	size_t size2 = fread_s(pcap_buffer, sizes + 1, sizeof(unsigned char), sizes, f);
 
 	int size = 0;
+	int size_c = 0;
 
 	point_t* data = load_file_data(pcap_buffer, sizes, &size, 20, 10000);
-
-	printf("%i\n", size);
+	color_t* color = load_file_color(pcap_buffer, sizes, &size_c, 20, 10000);
 
 	if (!glfwInit()) {
 		glfwTerminate();
@@ -64,8 +65,13 @@ int main(void) {
 	vert = loadShader("lidarshader.vert", GL_VERTEX_SHADER);
 	frag = loadShader("lidarshader.frag", GL_FRAGMENT_SHADER);
 
+	printf("%i, %i\n", vert, frag);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(2, VBO);
+	glGenBuffers(2, &VBO[0]);
 
 	glAttachShader(program, vert);
 	glAttachShader(program, frag);
@@ -75,17 +81,44 @@ int main(void) {
 
 	glLinkProgram(program);
 
+	GLint linked;
+	glGetProgramiv(program, GL_LINK_STATUS, &linked);
+
+	if (!linked) {
+		printf("\nerror\n");
+
+		GLint len;
+
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &len);
+		
+		char* log = (char*)calloc(len, sizeof(char));
+		
+		glGetProgramInfoLog(program, len, &len, log);
+		printf("%s\n", log);
+
+		free(log);
+
+		system("pause");
+		return 0;
+	}
+
+	printf("%i, %i\n", glGetAttribLocation(program, "vertex_position"), glGetAttribLocation(program, "vertex_color"));
+
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size * sizeof(point_t), data, GL_STATIC_DRAW);
+	glVertexAttribPointer(glGetAttribLocation(program, "vertex_position"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(glGetAttribLocation(program, "vertex_position"));
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+	glBufferData(GL_ARRAY_BUFFER, size_c * sizeof(color_t), color, GL_STATIC_DRAW);
+	glVertexAttribPointer(glGetAttribLocation(program, "vertex_color"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(glGetAttribLocation(program, "vertex_color"));
 
 	free(data);
+	free(color);
 
 	glEnable(GL_DEPTH_TEST);
-	float angle = 0;
 	while (!glfwWindowShouldClose(window)) {
 
 		glMatrixMode(GL_PROJECTION);
@@ -100,38 +133,7 @@ int main(void) {
 		glUseProgram(program);
 		glBindVertexArray(VAO);
 
-		glPushMatrix();
-		glColor3f(1, 1, 1);
-		glRotatef(30.0f, 1.0f, 0.0f, 0.0f);
-		glRotatef(angle, 0.0f, 1.0f, 0.0f);
-		glScalef(0.001f, 0.001f, 0.001f);
-
 		glDrawArrays(GL_POINTS, 0, size);
-
-		glScalef(100000.0f, 100000.0f,100000.0f);
-
-		glBegin(GL_LINES);
-
-		glColor3f(1, 0, 0);
-		glVertex3f(0, 0, 0);
-		glVertex3f(1, 0, 0);
-
-		glColor3f(0, 1, 0);
-		glVertex3f(0, 0, 0);
-		glVertex3f(0, 1, 0);
-
-		glColor3f(0, 0, 1);
-		glVertex3f(0, 0, 0);
-		glVertex3f(0, 0, 1);
-
-		glEnd();
-
-		glPopMatrix();
-
-		if (angle >= 360) {
-			angle = 0;
-		}
-		angle += 0.2f;
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
