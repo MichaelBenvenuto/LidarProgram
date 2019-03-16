@@ -60,6 +60,9 @@
     <ClCompile Include="src\lidar_converter\m_load_file_color_range.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\algebra\matrix\mg_matrix2vf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\lidar_converter.h">
@@ -105,6 +108,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\pcap_headers\pcap_packet_header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\algebra\matrix\matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\algebra\matrix\matrix2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\algebra\matrix\matrix3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\algebra\matrix\matrix4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algebra\matrix\h_matrix_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\algebra\matrix\mg_matrix2vf.cpp" />
     <ClCompile Include="src\lidar_converter\m_conv_file.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_color_range.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_data.cpp" />
@@ -148,6 +149,10 @@
     <ClCompile Include="src\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\algebra\matrix\matrix.h" />
+    <ClInclude Include="include\algebra\matrix\matrix2.h" />
+    <ClInclude Include="include\algebra\matrix\matrix3.h" />
+    <ClInclude Include="include\algebra\matrix\matrix4.h" />
     <ClInclude Include="include\color.h" />
     <ClInclude Include="include\pcap_headers\packet_types.h" />
     <ClInclude Include="include\pcap_headers\pcap_packet_header.h" />
@@ -158,6 +163,7 @@
     <ClInclude Include="include\pcap_headers\pcap_global_header.h" />
     <ClInclude Include="include\point.h" />
     <ClInclude Include="include\shader.h" />
+    <ClInclude Include="src\algebra\matrix\h_matrix_common.h" />
     <ClInclude Include="src\lidar_converter\h_lidar_converter_common.h" />
     <ClInclude Include="src\lidar_math\h_lidar_math_common.h" />
     <ClInclude Include="src\nmea_converter\h_nmea_converter_common.h" />
