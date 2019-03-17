@@ -38,5 +38,6 @@ packet_t* load_packets_data(const uint8_t* data, int count, int* out_size) {
 		}
 		i += packet_header.orig_len + sizeof(Pheader_t);
 	}
+
 	return ptr_pack;
 }
