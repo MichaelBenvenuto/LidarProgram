@@ -4,6 +4,10 @@
 #include <GLFW/glfw3.h>
 #include <gl/GL.h>
 #include <GL/GLU.h>
+#include <glm/matrix.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
@@ -13,6 +17,7 @@
 #include "../include/lidar_converter.h"
 #include "../include/nmea_converter.h"
 #include "../include/shader.h"
+
 int main(void) {
 
 	FILE* f = fopen("C:\\Users\\Michael\\Desktop\\VELODYNE\\VLP-16 Sample Data\\2015-07-23-14-37-22_Velodyne-VLP-16-Data_Downtown 10Hz Single.pcap", "rb");
@@ -62,10 +67,13 @@ int main(void) {
 	GLuint vert, frag;
 	GLuint program = glCreateProgram();
 
-	vert = loadShader("lidarshader.vert", GL_VERTEX_SHADER);
-	frag = loadShader("lidarshader.frag", GL_FRAGMENT_SHADER);
+	vert = load_shader("shaders/lidarshader.vert", GL_VERTEX_SHADER);
+	frag = load_shader("shaders/lidarshader.frag", GL_FRAGMENT_SHADER);
 
-	printf("%i, %i\n", vert, frag);
+	if (!vert || !frag) {
+		system("pause");
+		return -1;
+	}
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -78,31 +86,12 @@ int main(void) {
 
 	glBindAttribLocation(program, 0, "vertex_position");
 	glBindAttribLocation(program, 1, "vertex_color");
+	//glBindAttribLocation(program, 2, "camera_translation");
 
-	glLinkProgram(program);
-
-	GLint linked;
-	glGetProgramiv(program, GL_LINK_STATUS, &linked);
-
-	if (!linked) {
-		printf("\nerror\n");
-
-		GLint len;
-
-		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &len);
-		
-		char* log = (char*)calloc(len, sizeof(char));
-		
-		glGetProgramInfoLog(program, len, &len, log);
-		printf("%s\n", log);
-
-		free(log);
-
+	if (!link_program(program)) {
 		system("pause");
-		return 0;
+		return -1;
 	}
-
-	printf("%i, %i\n", glGetAttribLocation(program, "vertex_position"), glGetAttribLocation(program, "vertex_color"));
 
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
@@ -113,17 +102,38 @@ int main(void) {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
 	glBufferData(GL_ARRAY_BUFFER, size_c * sizeof(color_t), color, GL_STATIC_DRAW);
 	glVertexAttribPointer(glGetAttribLocation(program, "vertex_color"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+
 	glEnableVertexAttribArray(glGetAttribLocation(program, "vertex_color"));
+
+	GLint location_camera = glGetUniformLocation(program, "camera_translation");
+	GLint location_projection = glGetUniformLocation(program, "projection");
 
 	free(data);
 	free(color);
 
+	glm::vec3 eye;
+
+	double angle = 0;
+	double radius = 2;
+
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window)) {
 
+		eye = glm::vec3(radius * cos(angle) * cos(0.5), radius * sin(angle) * cos(0.5), sin(0.5));
+
+		glm::vec3 lookat(0, 0, 0);
+		glm::vec3 direction = glm::normalize(eye - lookat);
+
+		glm::vec3 up(0, 0, 1);
+		glm::vec3 right = glm::normalize(glm::cross(up, direction));
+		glm::vec3 camup = glm::normalize(glm::cross(direction, right));
+
+		glm::mat4 camera = glm::lookAt(eye, glm::vec3(0, 0, 0), up);
+		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
+
 		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
 		glViewport(0, 0, 800, 800);
-		glDepthRange(0, 10);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glMatrixMode(GL_MODELVIEW);
@@ -133,7 +143,12 @@ int main(void) {
 		glUseProgram(program);
 		glBindVertexArray(VAO);
 
+		glUniformMatrix4fv(location_camera, 1, GL_FALSE, glm::value_ptr(camera));
+		glUniformMatrix4fv(location_projection, 1, GL_FALSE, glm::value_ptr(projection));
+
 		glDrawArrays(GL_POINTS, 0, size);
+
+		angle = fmod(angle + 0.01, 360);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

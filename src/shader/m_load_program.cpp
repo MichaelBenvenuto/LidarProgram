@@ -2,11 +2,11 @@
 
 #include "h_shader_common.h"
 
-unsigned int loadShader(const char* file, unsigned int shader_type) {
+int load_shader(const char* file, unsigned int shader_type) {
 	FILE* f = fopen(file, "r");
 
 	if (!f) {
-		printf("Failed to open file");
+		printf("Failed to open file\n");
 		return 0;
 	}
 

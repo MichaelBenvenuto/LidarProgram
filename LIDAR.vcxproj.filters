@@ -36,9 +36,6 @@
     <ClCompile Include="src\packet_data\m_block_read.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\shader\m_load_shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\lidar_converter\m_conv_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,7 +57,10 @@
     <ClCompile Include="src\lidar_converter\m_load_file_color_range.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\algebra\matrix\mg_matrix2vf.cpp">
+    <ClCompile Include="src\shader\m_link_shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shader\m_load_program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,27 +110,12 @@
     <ClInclude Include="include\pcap_headers\pcap_packet_header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\algebra\matrix\matrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\algebra\matrix\matrix2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\algebra\matrix\matrix3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\algebra\matrix\matrix4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\algebra\matrix\h_matrix_common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="lidarshader.vert">
+    <None Include="shaders\lidarshader.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="lidarshader.frag">
+    <None Include="shaders\lidarshader.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

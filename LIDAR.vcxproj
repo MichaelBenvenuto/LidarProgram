@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{2F2F023F-3011-4B0B-801B-82454CE171CE}</ProjectGuid>
     <RootNamespace>LIDAR</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -80,7 +80,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -93,7 +93,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,7 +110,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,11 +127,10 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\algebra\matrix\mg_matrix2vf.cpp" />
     <ClCompile Include="src\lidar_converter\m_conv_file.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_color_range.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_data.cpp" />
@@ -145,14 +144,11 @@
     <ClCompile Include="src\nmea_converter\m_conv_nmea_char.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_packet.cpp" />
     <ClCompile Include="src\packet_data\m_block_read.cpp" />
-    <ClCompile Include="src\shader\m_load_shader.cpp" />
+    <ClCompile Include="src\shader\m_link_shader.cpp" />
+    <ClCompile Include="src\shader\m_load_program.cpp" />
     <ClCompile Include="src\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\algebra\matrix\matrix.h" />
-    <ClInclude Include="include\algebra\matrix\matrix2.h" />
-    <ClInclude Include="include\algebra\matrix\matrix3.h" />
-    <ClInclude Include="include\algebra\matrix\matrix4.h" />
     <ClInclude Include="include\color.h" />
     <ClInclude Include="include\pcap_headers\packet_types.h" />
     <ClInclude Include="include\pcap_headers\pcap_packet_header.h" />
@@ -163,7 +159,6 @@
     <ClInclude Include="include\pcap_headers\pcap_global_header.h" />
     <ClInclude Include="include\point.h" />
     <ClInclude Include="include\shader.h" />
-    <ClInclude Include="src\algebra\matrix\h_matrix_common.h" />
     <ClInclude Include="src\lidar_converter\h_lidar_converter_common.h" />
     <ClInclude Include="src\lidar_math\h_lidar_math_common.h" />
     <ClInclude Include="src\nmea_converter\h_nmea_converter_common.h" />
@@ -171,8 +166,8 @@
     <ClInclude Include="src\shader\h_shader_common.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="lidarshader.frag" />
-    <None Include="lidarshader.vert" />
+    <None Include="shaders\lidarshader.frag" />
+    <None Include="shaders\lidarshader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
