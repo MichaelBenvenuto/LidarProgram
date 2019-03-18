@@ -32,7 +32,7 @@ int main(void) {
 	int size = 0;
 	int size_c = 0;
 
-	point_t* data = load_file_data(pcap_buffer, sizes, &size, 20, 10000);
+	point_t* data = load_file_gps(pcap_buffer, sizes, &size, 20, 10000);
 	color_t* color = load_file_color(pcap_buffer, sizes, &size_c, 20, 10000);
 
 	if (!glfwInit()) {
@@ -114,12 +114,12 @@ int main(void) {
 	glm::vec3 eye;
 
 	double angle = 0;
-	double radius = 2;
+	double radius = 500;
 
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window)) {
 
-		eye = glm::vec3(radius * cos(angle) * cos(0.5), radius * sin(angle) * cos(0.5), sin(0.5));
+		eye = glm::vec3((radius * cos(angle) * cos(0.5)), (radius * sin(angle) * cos(0.5)), radius * sin(0.5));
 
 		glm::vec3 lookat(0, 0, 0);
 		glm::vec3 direction = glm::normalize(eye - lookat);
@@ -129,7 +129,7 @@ int main(void) {
 		glm::vec3 camup = glm::normalize(glm::cross(direction, right));
 
 		glm::mat4 camera = glm::lookAt(eye, glm::vec3(0, 0, 0), up);
-		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 1000.0f);
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();

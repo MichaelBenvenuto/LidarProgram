@@ -20,4 +20,6 @@ void process_translation(double lat, double lon, point_t* points, point_t home, 
 packet_t* load_packets_data(const uint8_t* data, int count, int* out_size);
 GPSpacket_t* load_packets_pos(const uint8_t* data, int count, int* out_size);
 
+void load_packets(const uint8_t* data, int count, packet_t** out_data, int* data_count, GPSpacket_t** out_pos, int* pos_count);
+
 #endif

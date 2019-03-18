@@ -15,6 +15,8 @@ point_t *packet(packet_t data, int* out_size);
 point_t *load_file_data(const uint8_t* data, int count, int *out_size);
 point_t *load_file_data(const uint8_t* data, int count, int *out_size, int min, int max);
 
+point_t *load_file_gps(const uint8_t* data, int count, int *out_size, int min, int max);
+
 color_t *load_file_color(const uint8_t* data, int count, int *out_size);
 color_t *load_file_color(const uint8_t* data, int count, int *out_size, int min, int max);
 

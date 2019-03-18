@@ -136,11 +136,14 @@
     <ClCompile Include="src\lidar_converter\m_load_file_data.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_color.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_data_range.cpp" />
+    <ClCompile Include="src\lidar_converter\m_load_file_gps.cpp" />
+    <ClCompile Include="src\lidar_converter\m_load_packets.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_packets_data.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_packets_pos.cpp" />
     <ClCompile Include="src\lidar_converter\m_process_translation.cpp" />
     <ClCompile Include="src\lidar_math\m_atoxyz.cpp" />
     <ClCompile Include="src\lidar_math\m_interpolate.cpp" />
+    <ClCompile Include="src\lidar_math\m_interpolatef.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_char.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_packet.cpp" />
     <ClCompile Include="src\packet_data\m_block_read.cpp" />

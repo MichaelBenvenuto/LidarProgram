@@ -20,8 +20,8 @@ color_t* load_file_color(const uint8_t* data, int count, int* out_size, int min,
 				uint16_t distance = packets[i].data_blocks[j].data.channel_data[k].distance / 100.0;
 
 				if (distance < max && distance > min) {
-					color[color_valid].r = interpolate(reflec, 0, 255, 0.0, 1.0);
-					color[color_valid].g = interpolate(reflec, 255, 0, 0.0, 1.0);
+					color[color_valid].r = interpolatef(reflec, 0, 255, 0.0, 1.0);
+					color[color_valid].g = interpolatef(reflec, 255, 0, 0.0, 1.0);
 					color[color_valid].b = 0;
 
 					color_valid++;

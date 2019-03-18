@@ -12,6 +12,6 @@ typedef struct {
 	uint32_t orig_len;       /* actual length of packet */
 } Pheader_t;
 
-#pragma pack(push)
+#pragma pack(pop)
 
 #endif

@@ -52,6 +52,7 @@ point_t *load_file_data(const uint8_t* data, int count, int *out_size, int min, 
 				}
 			}
 		}
+
 	}
 
 	*out_size = point_valid;
