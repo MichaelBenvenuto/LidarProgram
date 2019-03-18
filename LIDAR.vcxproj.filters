@@ -72,6 +72,12 @@
     <ClCompile Include="src\lidar_math\m_interpolatef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\nmea_converter\m_conv_nmea_char_course.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nmea_converter\m_conv_nmea_packet_course.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\lidar_converter.h">

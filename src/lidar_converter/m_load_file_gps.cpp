@@ -1,5 +1,9 @@
 #include "h_lidar_converter_common.h"
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/matrix.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+
 point_t *load_file_gps(const uint8_t* data, int count, int *out_size, int min, int max) {
 	packet_t* packet_data = 0;
 	GPSpacket_t* packet_pos = 0;
@@ -48,7 +52,9 @@ point_t *load_file_gps(const uint8_t* data, int count, int *out_size, int min, i
 			float lat2, lon2;
 			float lat3, lon3;
 
-			conv_NMEA(packet_pos[interpolate_pos], &lat1, &lon1);
+			float t_course;
+
+			conv_NMEA(packet_pos[interpolate_pos], &lat1, &lon1, &t_course);
 			conv_NMEA(packet_pos[interpolate_pos + 1], &lat3, &lon3);
 
 			lat2 = interpolatef(packet.timestamp, packet_pos[interpolate_pos].timestamp, packet_pos[interpolate_pos + 1].timestamp, lat1, lat3);
@@ -78,9 +84,13 @@ point_t *load_file_gps(const uint8_t* data, int count, int *out_size, int min, i
 						points[point_valid] = atoxyz(channel, a2, distance);
 					}
 
-					points[point_valid].x += (p.x - home->x);
-					points[point_valid].y += (p.y - home->y);
-					points[point_valid].z += 0;
+					glm::vec3 pos(points[point_valid].x, points[point_valid].y, points[point_valid].z);
+
+					pos = glm::rotate(pos, glm::radians(-t_course), glm::vec3(0, 0, 1));
+
+					points[point_valid].x = pos.x + (p.x - home->x);
+					points[point_valid].y = pos.y + (p.y - home->y);
+					points[point_valid].z = pos.z;
 
 					//printf("%f %f %f\n", points[point_valid].x, points[point_valid].y, points[point_valid].z);
 

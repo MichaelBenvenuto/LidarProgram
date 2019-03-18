@@ -18,4 +18,7 @@ typedef struct {
 int conv_NMEA(const char* gprmc_message, float* latitude, float* longitude);
 int conv_NMEA(GPSpacket_t packet, float* latitude, float* longitude);
 
+int conv_NMEA(const char* gprmc_message, float* latitude, float* longitude, float* t_course);
+int conv_NMEA(GPSpacket_t packet, float* latitude, float* longitude, float* t_course);
+
 #endif
