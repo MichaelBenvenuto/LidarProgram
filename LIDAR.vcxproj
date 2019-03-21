@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\color.h" />
+    <ClInclude Include="include\lidar_framing.h" />
     <ClInclude Include="include\pcap_headers\packet_types.h" />
     <ClInclude Include="include\pcap_headers\pcap_packet_header.h" />
     <ClInclude Include="include\lidar_converter.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="include\pcap_headers\pcap_global_header.h" />
     <ClInclude Include="include\point.h" />
     <ClInclude Include="include\shader.h" />
+    <ClInclude Include="src\lidar_converter\framing\h_lidar_converter_framing_common.h" />
     <ClInclude Include="src\lidar_converter\h_lidar_converter_common.h" />
     <ClInclude Include="src\lidar_math\h_lidar_math_common.h" />
     <ClInclude Include="src\nmea_converter\h_nmea_converter_common.h" />

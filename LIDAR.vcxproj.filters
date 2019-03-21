@@ -131,6 +131,12 @@
     <ClInclude Include="include\pcap_headers\pcap_packet_header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\lidar_converter\framing\h_lidar_converter_framing_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lidar_framing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\lidarshader.frag">
