@@ -21,4 +21,7 @@ int conv_NMEA(GPSpacket_t packet, float* latitude, float* longitude);
 int conv_NMEA(const char* gprmc_message, float* latitude, float* longitude, float* t_course);
 int conv_NMEA(GPSpacket_t packet, float* latitude, float* longitude, float* t_course);
 
+point_t conv_NMEA_geoloc(const char* message);
+point_t* conv_NMEA_geoloc(GPSpacket_t* packet, int packet_count);
+
 #endif
