@@ -144,8 +144,10 @@
     <ClCompile Include="src\lidar_math\m_atoxyz.cpp" />
     <ClCompile Include="src\lidar_math\m_interpolate.cpp" />
     <ClCompile Include="src\lidar_math\m_interpolatef.cpp" />
+    <ClCompile Include="src\nmea_converter\m_conv_nmea_geoloc_buf.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_char.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_char_course.cpp" />
+    <ClCompile Include="src\nmea_converter\m_conv_nmea_geoloc_packet.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_packet.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_packet_course.cpp" />
     <ClCompile Include="src\packet_data\m_block_read.cpp" />

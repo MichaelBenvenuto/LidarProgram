@@ -78,6 +78,12 @@
     <ClCompile Include="src\nmea_converter\m_conv_nmea_packet_course.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\nmea_converter\m_conv_nmea_geoloc_buf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nmea_converter\m_conv_nmea_geoloc_packet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\lidar_converter.h">
