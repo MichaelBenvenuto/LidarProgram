@@ -17,9 +17,6 @@ const double lookup_table[16] = { -15.0,1.0,-13.0,-3.0,-11.0,5.0,-9.0,7.0,-7.0,9
 
 void process_translation(double lat, double lon, point_t* points, point_t home, int start, int size, int total_size);
 
-packet_t* load_packets_data(const uint8_t* data, int count, int* out_size);
-GPSpacket_t* load_packets_pos(const uint8_t* data, int count, int* out_size);
-
 void load_packets(const uint8_t* data, int count, packet_t** out_data, int* data_count, GPSpacket_t** out_pos, int* pos_count);
 
 #endif

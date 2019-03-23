@@ -66,6 +66,7 @@ point_t *load_file_gps(const uint8_t* data, int count, int *out_size, int min, i
 
 			if (!home) {
 				home = (point_t*)malloc(sizeof(point_t));
+				if (!home) return 0;
 				*home = p;
 			}
 
@@ -100,7 +101,11 @@ point_t *load_file_gps(const uint8_t* data, int count, int *out_size, int min, i
 		}
 	}
 
+	point_t* tpoint = points;
+
 	points = (point_t*)realloc(points, point_valid * sizeof(point_t));
+
+	if (tpoint != points) free(tpoint);
 
 	*out_size = point_valid;
 

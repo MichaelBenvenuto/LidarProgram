@@ -4,6 +4,6 @@
 #include "../h_lidar_converter_common.h"
 #include "../../../include/lidar_framing.h"
 
-int azimuth_cross(packet_t packet);
+int azimuth_cross(packet_t packet, int* cross_at);
 
 #endif

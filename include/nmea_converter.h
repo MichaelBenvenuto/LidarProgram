@@ -1,6 +1,8 @@
 #ifndef LIDAR_NMEA
 #define LIDAR_NMEA
 
+#include "point.h"
+
 #include <stdint.h>
 
 #pragma pack(push, 1)
@@ -23,5 +25,7 @@ int conv_NMEA(GPSpacket_t packet, float* latitude, float* longitude, float* t_co
 
 point_t conv_NMEA_geoloc(const char* message);
 point_t* conv_NMEA_geoloc(GPSpacket_t* packet, int packet_count);
+
+GPSpacket_t* load_packets_pos(const uint8_t* data, int count, int* out_size);
 
 #endif

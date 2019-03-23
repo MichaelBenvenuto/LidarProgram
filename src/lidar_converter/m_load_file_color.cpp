@@ -11,6 +11,10 @@ color_t* load_file_color(const uint8_t* data, int count, int* out_size) {
 
 	color_t* color = (color_t*)calloc(color_size, sizeof(point_t));
 
+	if (!color) {
+		return 0;
+	}
+
 	for(int i = 0; i < packets_size; i++){
 		for (int j = 0; j < 12; j++) {
 			for (int k = 0; k < 32; k++) {
@@ -26,5 +30,5 @@ color_t* load_file_color(const uint8_t* data, int count, int* out_size) {
 		}
 	}
 
-	return 0;
+	return color;
 }

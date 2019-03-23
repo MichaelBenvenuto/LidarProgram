@@ -30,4 +30,6 @@ typedef struct {
 
 dblock_t block_read(const unsigned char* block);
 
+packet_t* load_packets_data(const uint8_t* data, int count, int* out_size);
+
 #endif

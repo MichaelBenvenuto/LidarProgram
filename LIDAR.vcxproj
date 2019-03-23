@@ -69,7 +69,18 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <CodeAnalysisRuleSet>..\..\Rulesets\UnusedNative.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CodeAnalysisRuleSet>..\..\Rulesets\UnusedNative.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CodeAnalysisRuleSet>..\..\Rulesets\UnusedNative.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CodeAnalysisRuleSet>..\..\Rulesets\UnusedNative.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -131,16 +142,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\lidar_converter\framing\locm_azimuth_cross.cpp" />
+    <ClCompile Include="src\lidar_converter\framing\m_load_frames.cpp" />
     <ClCompile Include="src\lidar_converter\m_conv_file.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_color_range.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_data.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_color.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_data_range.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_gps.cpp" />
-    <ClCompile Include="src\lidar_converter\m_load_packets.cpp" />
-    <ClCompile Include="src\lidar_converter\m_load_packets_data.cpp" />
-    <ClCompile Include="src\lidar_converter\m_load_packets_pos.cpp" />
-    <ClCompile Include="src\lidar_converter\m_process_translation.cpp" />
+    <ClCompile Include="src\lidar_converter\locm_load_packets.cpp" />
+    <ClCompile Include="src\packet_data\m_load_packets_data.cpp" />
+    <ClCompile Include="src\nmea_converter\m_load_packets_pos.cpp" />
+    <ClCompile Include="src\lidar_converter\locm_process_translation.cpp" />
     <ClCompile Include="src\lidar_math\m_atoxyz.cpp" />
     <ClCompile Include="src\lidar_math\m_interpolate.cpp" />
     <ClCompile Include="src\lidar_math\m_interpolatef.cpp" />
@@ -150,7 +163,6 @@
     <ClCompile Include="src\nmea_converter\m_conv_nmea_geoloc_packet.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_packet.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_packet_course.cpp" />
-    <ClCompile Include="src\packet_data\m_block_read.cpp" />
     <ClCompile Include="src\shader\m_link_shader.cpp" />
     <ClCompile Include="src\shader\m_load_program.cpp" />
     <ClCompile Include="src\Source.cpp" />

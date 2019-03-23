@@ -17,6 +17,7 @@
 #include "../include/lidar_converter.h"
 #include "../include/nmea_converter.h"
 #include "../include/shader.h"
+#include "../include/lidar_framing.h"
 
 int main(void) {
 
@@ -26,13 +27,18 @@ int main(void) {
 	int sizes = ftell(f);
 	rewind(f);
 
-	unsigned char* pcap_buffer = (unsigned char*)calloc(sizes + 1, sizeof(unsigned char));
-	size_t size2 = fread_s(pcap_buffer, sizes + 1, sizeof(unsigned char), sizes, f);
+	unsigned char* pcap_buffer = (unsigned char*)calloc((size_t)(sizes)+1ull, sizeof(unsigned char));
+
+	if (!pcap_buffer) {
+		return -2;
+	}
+
+	size_t size2 = fread_s(pcap_buffer, (size_t)(sizes)+1ull, sizeof(unsigned char), sizes, f);
 
 	int size = 0;
 	int size_c = 0;
 
-	point_t* data = load_file_gps(pcap_buffer, sizes, &size, 20, 10000);
+	point_t* data = load_file_data(pcap_buffer, sizes, &size, 20, 10000);
 	color_t* color = load_file_color(pcap_buffer, sizes, &size_c, 20, 10000);
 
 	if (!glfwInit()) {

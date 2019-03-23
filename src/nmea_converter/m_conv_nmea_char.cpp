@@ -38,7 +38,7 @@ int conv_NMEA(const char* message, float* latitude, float* longitude) {
 				size = comma_f - comma_l;
 				float_conv = (char*)calloc(size, sizeof(char));
 				//strncpy(float_conv, &message[comma_l + 1], size - 1);
-				strncpy_s(float_conv, size, &message[comma_l + 1], size - 1);
+				strncpy_s(float_conv, size, &message[comma_l + 1], (size_t)(size) - 1ull);
 				*latitude = atof(float_conv);
 
 				degrees = floor(*latitude / 100);
@@ -61,7 +61,7 @@ int conv_NMEA(const char* message, float* latitude, float* longitude) {
 				size = comma_f - comma_l;
 				float_conv = (char*)calloc(size, sizeof(char));
 				//strncpy(float_conv, &message[comma_l + 1], size - 1);
-				strncpy_s(float_conv, size, &message[comma_l + 1], size - 1);
+				strncpy_s(float_conv, size, &message[comma_l + 1], (size_t)(size) - 1ull);
 
 				*longitude = atof(float_conv);
 

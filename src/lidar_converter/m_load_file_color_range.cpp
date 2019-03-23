@@ -13,6 +13,8 @@ color_t* load_file_color(const uint8_t* data, int count, int* out_size, int min,
 
 	int color_valid = 0;
 
+	if (!color) return 0;
+
 	for (int i = 0; i < packets_size; i++) {
 		for (int j = 0; j < 12; j++) {
 			for (int k = 0; k < 32; k++) {
@@ -39,7 +41,6 @@ color_t* load_file_color(const uint8_t* data, int count, int* out_size, int min,
 	color = (color_t*)realloc(color, color_valid * sizeof(color_t));
 
 	if (c != color) {
-		printf("MEMORY LEAK THERE!\n");
 		free(c);
 	}
 

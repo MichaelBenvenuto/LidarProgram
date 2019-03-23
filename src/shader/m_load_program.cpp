@@ -16,6 +16,8 @@ int load_shader(const char* file, unsigned int shader_type) {
 
 	char* shader_c = (char*)calloc(size, sizeof(char));
 
+	if (!shader_c) return -1;
+
 	int read = fread(shader_c, sizeof(char), size, f);
 
 	GLuint shader_id = glCreateShader(shader_type);

@@ -13,6 +13,8 @@ point_t *load_file_data(const uint8_t* data, int count, int* out_size) {
 
 	point_t* points = (point_t*)calloc(point_size, sizeof(point_t));
 
+	if (!points) return 0;
+
 	for (int i = 0; i < packets_size; i++) {
 		packet_t packet = packets[i];
 		for (int j = 0; j < 12; j++) {

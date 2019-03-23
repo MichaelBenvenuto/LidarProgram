@@ -51,8 +51,14 @@ void load_packets(const uint8_t* data, int count, packet_t** out_data, int* data
 
 	printf("%i\n%i\n", data_c, pos_c);
 
+	packet_t* tpack = data_ptr;
+	GPSpacket_t* ppack = pos_ptr;
+
 	data_ptr = (packet_t*)realloc(data_ptr, (data_c) * sizeof(packet_t));
 	pos_ptr = (GPSpacket_t*)realloc(pos_ptr, (pos_c) * sizeof(GPSpacket_t));
+
+	if (data_ptr != tpack) free(tpack);
+	if (pos_ptr != ppack) free(ppack);
 
 	*out_data = data_ptr;
 	*out_pos = pos_ptr;
