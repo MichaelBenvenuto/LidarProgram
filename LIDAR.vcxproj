@@ -151,6 +151,11 @@
     <ClCompile Include="src\lidar_converter\m_load_file_data_range.cpp" />
     <ClCompile Include="src\lidar_converter\m_load_file_gps.cpp" />
     <ClCompile Include="src\lidar_converter\locm_load_packets.cpp" />
+    <ClCompile Include="src\lidar_math\curve\m_add_point.cpp" />
+    <ClCompile Include="src\lidar_math\curve\m_add_point_index.cpp" />
+    <ClCompile Include="src\lidar_math\curve\m_calculate_curve.cpp" />
+    <ClCompile Include="src\lidar_math\curve\m_remove_point.cpp" />
+    <ClCompile Include="src\lidar_math\curve\m_remove_point_index.cpp" />
     <ClCompile Include="src\packet_data\m_load_packets_data.cpp" />
     <ClCompile Include="src\nmea_converter\m_load_packets_pos.cpp" />
     <ClCompile Include="src\lidar_converter\locm_process_translation.cpp" />
@@ -182,7 +187,8 @@
     <ClInclude Include="include\shader.h" />
     <ClInclude Include="src\lidar_converter\framing\h_lidar_converter_framing_common.h" />
     <ClInclude Include="src\lidar_converter\h_lidar_converter_common.h" />
-    <ClInclude Include="src\lidar_math\generic\h_lidar_math_common.h" />
+    <ClInclude Include="src\lidar_math\curve\h_lidar_math_curve_common.h" />
+    <ClInclude Include="src\lidar_math\generic\h_lidar_math_generic_common.h" />
     <ClInclude Include="src\nmea_converter\h_nmea_converter_common.h" />
     <ClInclude Include="src\packet_data\h_packet_data_common.h" />
     <ClInclude Include="src\shader\h_shader_common.h" />

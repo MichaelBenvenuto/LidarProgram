@@ -87,6 +87,21 @@
     <ClCompile Include="src\lidar_math\generic\m_interpolatef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\lidar_math\curve\m_add_point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lidar_math\curve\m_add_point_index.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lidar_math\curve\m_remove_point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lidar_math\curve\m_remove_point_index.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lidar_math\curve\m_calculate_curve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\lidar_converter.h">
@@ -140,7 +155,10 @@
     <ClInclude Include="include\math\math_curve_graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\lidar_math\generic\h_lidar_math_common.h">
+    <ClInclude Include="src\lidar_math\generic\h_lidar_math_generic_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lidar_math\curve\h_lidar_math_curve_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
