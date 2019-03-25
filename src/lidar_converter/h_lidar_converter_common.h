@@ -8,7 +8,7 @@
 #include "../../include/pcap_headers/packet_types.h"
 #include "../../include/lidar_converter.h"
 #include "../../include/nmea_converter.h"
-#include "../../include/math_l.h"
+#include "../../include/math/math_generic.h"
 
 #define QUICKCAST_16T(a) (*((uint16_t*)&a))
 #define ROTATE_16T(a) (((a << 8) | (a >> 8)) & 0xffffu)

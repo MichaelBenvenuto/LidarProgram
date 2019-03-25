@@ -15,7 +15,7 @@ point_t *load_file_data(const uint8_t* data, int count, int *out_size, int min, 
 
 	int point_valid = 0;
 
-	int should_break = 0;
+	int frames = 0;
 
 	for (int i = 0; i < packets_size; i++) {
 		packet_t packet = packets[i];
@@ -27,9 +27,9 @@ point_t *load_file_data(const uint8_t* data, int count, int *out_size, int min, 
 			a1 = (data_block.azimuth / 100.0);
 			a3 = (j == 11) ? (packets[i + 1].data_blocks[0].data.azimuth / 100.0) : (packet.data_blocks[j + 1].data.azimuth / 100.0);
 
-			if (a1 < a3) {
+			if (a3 < a1) {
 				a3 += 360.0;
-				should_break = 1;
+				frames++;
 			}
 
 			a2 = (a1 + ((a3 - a1) / 2));
@@ -38,7 +38,7 @@ point_t *load_file_data(const uint8_t* data, int count, int *out_size, int min, 
 				a2 -= 360.0;
 			}
 
-			printf("%f %f %f\n", a1, a2, a3);
+			//printf("%f %f %f\n", a1, a2, a3);
 
 			a1 *= (3.14) / 180.0;
 			a2 *= (3.14) / 180.0;
@@ -63,8 +63,9 @@ point_t *load_file_data(const uint8_t* data, int count, int *out_size, int min, 
 				}
 			}
 		}
-		if (should_break) break;
 	}
+
+	printf("%i\n", frames);
 
 	*out_size = point_valid;
 
