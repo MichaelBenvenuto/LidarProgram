@@ -70,16 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <CodeAnalysisRuleSet>..\..\Rulesets\UnusedNative.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>CppCoreCheckRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <CodeAnalysisRuleSet>..\..\Rulesets\UnusedNative.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>CppCoreCheckRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <CodeAnalysisRuleSet>..\..\Rulesets\UnusedNative.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>CppCoreCheckRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <CodeAnalysisRuleSet>..\..\Rulesets\UnusedNative.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -154,9 +154,9 @@
     <ClCompile Include="src\packet_data\m_load_packets_data.cpp" />
     <ClCompile Include="src\nmea_converter\m_load_packets_pos.cpp" />
     <ClCompile Include="src\lidar_converter\locm_process_translation.cpp" />
-    <ClCompile Include="src\lidar_math\m_atoxyz.cpp" />
-    <ClCompile Include="src\lidar_math\m_interpolate.cpp" />
-    <ClCompile Include="src\lidar_math\m_interpolatef.cpp" />
+    <ClCompile Include="src\lidar_math\generic\m_atoxyz.cpp" />
+    <ClCompile Include="src\lidar_math\generic\m_interpolate.cpp" />
+    <ClCompile Include="src\lidar_math\generic\m_interpolatef.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_geoloc_buf.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_char.cpp" />
     <ClCompile Include="src\nmea_converter\m_conv_nmea_char_course.cpp" />
@@ -170,10 +170,11 @@
   <ItemGroup>
     <ClInclude Include="include\color.h" />
     <ClInclude Include="include\lidar_framing.h" />
+    <ClInclude Include="include\math\math_curve_graph.h" />
     <ClInclude Include="include\pcap_headers\packet_types.h" />
     <ClInclude Include="include\pcap_headers\pcap_packet_header.h" />
     <ClInclude Include="include\lidar_converter.h" />
-    <ClInclude Include="include\math_l.h" />
+    <ClInclude Include="include\math\math_generic.h" />
     <ClInclude Include="include\nmea_converter.h" />
     <ClInclude Include="include\packet_data.h" />
     <ClInclude Include="include\pcap_headers\pcap_global_header.h" />
@@ -181,7 +182,7 @@
     <ClInclude Include="include\shader.h" />
     <ClInclude Include="src\lidar_converter\framing\h_lidar_converter_framing_common.h" />
     <ClInclude Include="src\lidar_converter\h_lidar_converter_common.h" />
-    <ClInclude Include="src\lidar_math\h_lidar_math_common.h" />
+    <ClInclude Include="src\lidar_math\generic\h_lidar_math_common.h" />
     <ClInclude Include="src\nmea_converter\h_nmea_converter_common.h" />
     <ClInclude Include="src\packet_data\h_packet_data_common.h" />
     <ClInclude Include="src\shader\h_shader_common.h" />

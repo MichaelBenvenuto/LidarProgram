@@ -24,12 +24,6 @@
     <ClCompile Include="src\nmea_converter\m_conv_nmea_packet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\lidar_math\m_interpolate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lidar_math\m_atoxyz.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\lidar_converter\m_conv_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -52,9 +46,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\lidar_converter\m_load_file_gps.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lidar_math\m_interpolatef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\nmea_converter\m_conv_nmea_char_course.cpp">
@@ -87,12 +78,18 @@
     <ClCompile Include="src\nmea_converter\m_load_packets_pos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\lidar_math\generic\m_atoxyz.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lidar_math\generic\m_interpolate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lidar_math\generic\m_interpolatef.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\lidar_converter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\math_l.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\nmea_converter.h">
@@ -108,9 +105,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\lidar_converter\h_lidar_converter_common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\lidar_math\h_lidar_math_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\packet_data\h_packet_data_common.h">
@@ -138,6 +132,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\lidar_framing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\math\math_generic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\math\math_curve_graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lidar_math\generic\h_lidar_math_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

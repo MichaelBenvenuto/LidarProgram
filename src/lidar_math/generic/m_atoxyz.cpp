@@ -1,4 +1,4 @@
-#include "h_lidar_math_common.h"
+#include "h_lidar_math_generic_common.h"
 
 point_t atoxyz(double a1, double a2, double distance) {
 	point_t p;

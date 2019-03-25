@@ -1,7 +1,7 @@
 #ifndef LIDAR_MATHS
 #define LIDAR_MATHS
 
-#include "lidar_converter.h"
+#include "../lidar_converter.h"
 
 #define min(a,b) ((a < b) ? a : b)
 #define max(a,b) ((a > b) ? a : b)
