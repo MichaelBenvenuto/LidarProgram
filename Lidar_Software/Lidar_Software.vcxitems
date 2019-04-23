@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{f9ebb7b8-79fb-4d83-9dcf-4bfdfd763fcb}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\color.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\lidar_converter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\lut.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\nmea_converter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\packet_data.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\pcap_headers\global_header.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\pcap_headers\packet_header.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\lidar_converter\LidarConverter\h_lidar_converter_class_common.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\nmea_converter\h_nmea_converter_common.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\lidar_converter\LidarConverter\LidarConverter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\lidar_converter\LidarConverter\m_load_geo.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\lidar_converter\LidarConverter\m_load_raw.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\lidar_converter\LidarConverter\m_load_raw1.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\lidar_converter\LidarConverter\m_load_raw2.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\lidar_converter\LidarConverter\m_load_raw_3.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\lidar_converter\lut.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\nmea_converter\m_conv_nmea_char.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\nmea_converter\m_conv_nmea_char_course.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\nmea_converter\m_conv_nmea_packet.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\nmea_converter\m_conv_nmea_packet_course.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\nmea_converter\m_load_packets_pos.cpp" />
+  </ItemGroup>
+</Project>
